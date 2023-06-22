@@ -1,0 +1,10 @@
+@import '../../assets/styles/colors.scss';
+
+.public-layout {
+    background: $bg-color url('../../assets/images/bg.svg') no-repeat center center fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
