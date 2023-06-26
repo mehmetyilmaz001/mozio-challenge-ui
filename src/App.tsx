@@ -2,12 +2,12 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ConfigProvider } from 'antd';
 import { Home, Result } from './containers';
-
-import './App.css';
+import './assets/styles/app.scss';
+import locale from 'antd/es/locale/en_US';
 
 function App() {
   return (
-    <ConfigProvider theme={{ token: { colorPrimary: '#00b96b' } }}>
+    <ConfigProvider theme={{ token: { colorPrimary: '#00b96b' } }} locale={locale}>
        <BrowserRouter basename="/">
           <Routes>
             <Route index element={<Home />} />
