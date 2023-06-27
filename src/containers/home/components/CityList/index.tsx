@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Form, FormInstance, FormItemProps } from 'antd';
 import CitySearch from '../CitySearch';
 import { ERROR_MESSAGES } from '../../../../contants';
+import Line from '../../../../components/Line';
+import PlusIcon from '../../../../assets/images/icon-plus.svg';
+
+import './styles.scss';
 
 
 interface CityRowProps {
@@ -20,7 +24,7 @@ const CityList = ({ form }: CityRowProps) => {
         validateStatus: "error",
     };
 
-    const validationRule = (_: any, city: string, index: number) => {
+    const validationRule = useCallback((_: any, city: string, index: number) => {
         if (!city) {
             return Promise.reject(new Error(ERROR_MESSAGES.CITY_REQUIRED));
         }
@@ -31,16 +35,16 @@ const CityList = ({ form }: CityRowProps) => {
                 return Promise.reject(new Error(ERROR_MESSAGES.CITY_DUPLICATE));
             }
         }
-    }
+    }, [form]);
 
-    const customValidationRule = (index: number) => {
+    const customValidationRule = useCallback((index: number) => {
         const originCity = form.getFieldValue("cities")[0];
         if (index > 0) {
             if (!originCity) {
                 setCustomValidationParams({ index: index > 1 ? index : 0, errMsg: ERROR_MESSAGES.CITY_ORIGIN_REQUIRED });
             }
         }
-    }
+    }, [form]);
 
     useEffect(() => {
         if (cities && cities.length > 1) {
@@ -50,52 +54,65 @@ const CityList = ({ form }: CityRowProps) => {
         }
     }, [cities]);
 
+    const lineItems = cities ? cities.map((city: string, index: number) => {
+        return {
+            id: index,
+            name: city,
+            info: ''
+        }
+    }) : [];
+
     return (
-        <Form.List
-            name="cities"
-            initialValue={['', '']}
-        >
-            {(fields, { add, remove }, { errors }) => (
-                <>
-                    {fields.map((field, index) => (
-                        <Form.Item
-                            label={index === 0 ? 'City of origin' : 'City of destination'}
-                            required={false}
-                            {...field}
-                            {...(customValidationParams.index === index ? cityInputErrorProps : {})}
-                            validateTrigger={['onChange', 'onBlur']}
-                            rules={[
-                                {
-                                    validator: async (_, city) => validationRule(_, city, index)
-                                },
-                            ]}
+        <div className='city-list-container'>
+            <div className='list-line-row'>
+                <Line items={lineItems} showLinesOnly />
+                <div className='city-list'>
+                    <Form.List
+                        name="cities"
+                        initialValue={['', '']}
+                    >
+                        {(fields, { add }, { errors }) => (
+                            <>
+                                {fields.map((field, index) => (
+                                    <Form.Item
+                                        label={index === 0 ? 'City of origin' : 'City of destination'}
+                                        required={false}
+                                        {...field}
+                                        {...(customValidationParams.index === index ? cityInputErrorProps : {})}
+                                        validateTrigger={['onChange', 'onBlur']}
+                                        rules={[
+                                            {
+                                                validator: async (_, city) => validationRule(_, city, index)
+                                            },
+                                        ]}
+                                        style={{ width: '100%' }}
 
-                        >
+                                    >
+                                        <CitySearch onInputKeyDown={() => customValidationRule(index)} />
 
-                            <CitySearch onInputKeyDown={() => customValidationRule(index)}
-                                name={field.name}
-                                index={index}
-                                remove={remove}
-                                fieldsLen={fields.length}
-                            />
+                                    </Form.Item>
+                                ))}
 
-                        </Form.Item>
-                    ))}
+                                <div style={{display: 'flex', position: 'relative'}}>
+                                    <img src={PlusIcon} alt='plus-icon' style={{position: 'absolute', left: -53, top: 8}} />
+                                    <Form.Item style={{marginBottom: 0}}>
+                                        <Button
+                                            type="text"
+                                            onClick={() => add()}
+                                            style={{ padding: 0, color: '#7786D2' }}
+                                        >
 
-
-                    <Form.Item>
-                        <Button
-                            type="dashed"
-                            onClick={() => add()}
-                            style={{ width: '60%' }}
-                        >
-                            Add Destination
-                        </Button>
-                        <Form.ErrorList errors={errors} />
-                    </Form.Item>
-                </>
-            )}
-        </Form.List>
+                                            Add Destination
+                                        </Button>
+                                        <Form.ErrorList errors={errors} />
+                                    </Form.Item>
+                                </div>
+                            </>
+                        )}
+                    </Form.List>
+                </div>
+            </div>
+        </div>
     );
 }
 

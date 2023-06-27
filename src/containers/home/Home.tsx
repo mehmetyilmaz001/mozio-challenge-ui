@@ -1,40 +1,52 @@
 import React from 'react'
-import { Card, Form, Button, InputNumber, DatePicker, Col, Row} from 'antd';
+import { Form, Button, InputNumber, DatePicker, Col, Row } from 'antd';
 import PublicLayout from '../../layouts/PublicLayout'
 import dayjs from 'dayjs';
 import CityList from './components/CityList';
+import AppCard from '../../components/AppCard';
 
 const Home = () => {
+    const [submittable, setSubmittable] = React.useState(false);
     const [form] = Form.useForm();
+    // Watch all values
+  const values = Form.useWatch([], form);
+
+  React.useEffect(() => {
+    form.validateFields({ validateOnly: true }).then(
+      () => {
+        setSubmittable(true);
+      },
+      () => {
+        setSubmittable(false);
+      },
+    );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [values]);
+  
     const onFinish = (values: any) => {
         console.log('Received values of form:', values);
     };
 
-    const cities = Form.useWatch('cities', form);
-    console.log("cities home", cities);
-
-
     return (
         <PublicLayout>
-            <Card>
-
+            <AppCard>
                 <Form
                     name="dynamic_form_item"
                     onFinish={onFinish}
-                    style={{ maxWidth: 600 }}
                     layout='vertical'
                     form={form}
                     initialValues={{
                         passengers: 1,
                         date: dayjs(),
-                        
+
                     }}
+                    style={{display: 'flex', flexDirection: 'column'}}
                 >
-                    <Row gutter={80}>
-                        <Col span={12}>
+                    <Row gutter={50}>
+                        <Col span={18}>
                             <CityList form={form} />
                         </Col>
-                        <Col span={12}>
+                        <Col span={6}>
                             <Form.Item
                                 name="passengers"
                                 label="Passengers"
@@ -50,19 +62,13 @@ const Home = () => {
                         </Col>
                     </Row>
 
-                    <Row>
-                        <Col span={12}>
-                            <Form.Item>
-                                <Button type="primary" htmlType="submit">
-                                    Submit
-                                </Button>
-                            </Form.Item>
-                        </Col>
-                    </Row>
+                    <Button type="primary" htmlType="submit" style={{alignSelf: 'center', marginTop: 34}} disabled={!submittable}>
+                        Submit
+                    </Button>
 
                 </Form>
 
-            </Card>
+            </AppCard>
         </PublicLayout>
     )
 }

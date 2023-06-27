@@ -2,9 +2,6 @@ import { SelectProps } from 'antd';
 import DebounceSelect from '../../../../components/DebounceSelect';
 import { DefaultOptionType, LabeledValue } from 'antd/es/select';
 import useFetchCities from './useFetchCities';
-import MinusIcon from '../../../../assets/images/icon-remove.svg';
-import CircleIcon from '../../../../assets/images/icon-circle.svg';
-import PinIcon from '../../../../assets/images/icon-pin.svg';
 
 import './styles.scss';
 
@@ -19,19 +16,13 @@ interface ICitySearchProps {
     value?: LabeledValue | LabeledValue[];
     onChange?: (value: LabeledValue | LabeledValue[] | undefined, option: DefaultOptionType | DefaultOptionType[]) => void;
     onInputKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-    index: number;
-    remove: (index: number) => void;
-    name: number;
-    fieldsLen: number;
 }
 
-const CitySearch: React.FC<ICitySearchProps> = ({ value, onChange, onInputKeyDown, remove, index, name, fieldsLen }) => {
+const CitySearch: React.FC<ICitySearchProps> = ({ value, onChange, onInputKeyDown }) => {
     const fetchCityList = useFetchCities();
 
     return (
         <div className='city-search'>
-            {index > 0 && index === fieldsLen - 1 ? (<img src={PinIcon} alt='icon-pin' />) : (<img src={CircleIcon} alt="icon-circle" />)}
-
             <DebounceSelect
                 value={value}
                 fetchOptions={fetchCityList}
@@ -40,12 +31,6 @@ const CitySearch: React.FC<ICitySearchProps> = ({ value, onChange, onInputKeyDow
                 style={{ width: '100%' }}
                 allowClear
             />
-            {index > 1 ? (
-                <button
-                    className="dynamic-delete-button"
-                    onClick={() => remove(name)}
-                ><img src={MinusIcon} alt="icon-minus" /></button>
-            ) : null}
         </div>
 
     );
