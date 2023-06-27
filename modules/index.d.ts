@@ -1,0 +1,1 @@
+declare module 'rc-pagination/es/locale/tr_TR';

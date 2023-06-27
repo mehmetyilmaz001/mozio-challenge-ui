@@ -3,6 +3,14 @@ import { Distance, Range } from "../../types";
 import { GET_DISTANCE_ENDPOINT } from "../../contants";
 import { LineItem } from "../../components/Line";
 
+export type useFetchDistanceReturnType = {
+    lineItems: LineItem[],
+    loading: boolean,
+    error: string | null,
+    distance: Distance | null,
+    
+}
+
 const useFetchDistance = (cities: string | null) => {
     const [distance, setDistance] = useState<Distance | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
@@ -32,7 +40,7 @@ const useFetchDistance = (cities: string | null) => {
             return [] as LineItem[];
         }
 
-        const items = [];
+        const items:LineItem[] = [];
 
         const { ranges } = distance;
 
@@ -60,7 +68,7 @@ const useFetchDistance = (cities: string | null) => {
     }, [distance]);
 
 
-    return { lineItems, loading, error, distance }
+    return { lineItems, loading, error, distance}
 
 };
 

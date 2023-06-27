@@ -35,6 +35,8 @@ const CityList = ({ form }: CityRowProps) => {
                 return Promise.reject(new Error(ERROR_MESSAGES.CITY_DUPLICATE));
             }
         }
+
+        return Promise.resolve();
     }, [form]);
 
     const customValidationRule = useCallback((index: number) => {
