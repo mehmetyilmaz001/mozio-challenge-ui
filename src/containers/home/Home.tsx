@@ -4,27 +4,30 @@ import PublicLayout from '../../layouts/PublicLayout'
 import dayjs from 'dayjs';
 import CityList from './components/CityList';
 import AppCard from '../../components/AppCard';
+import history from '../../history';
 
 const Home = () => {
     const [submittable, setSubmittable] = React.useState(false);
     const [form] = Form.useForm();
     // Watch all values
-  const values = Form.useWatch([], form);
+    const values = Form.useWatch([], form);
 
-  React.useEffect(() => {
-    form.validateFields({ validateOnly: true }).then(
-      () => {
-        setSubmittable(true);
-      },
-      () => {
-        setSubmittable(false);
-      },
-    );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [values]);
-  
+    React.useEffect(() => {
+        form.validateFields({ validateOnly: true }).then(
+            () => {
+                setSubmittable(true);
+            },
+            () => {
+                setSubmittable(false);
+            },
+        );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [values]);
+
     const onFinish = (values: any) => {
-        console.log('Received values of form:', values);
+        const cities = values.cities.join(',');
+        const date = values.date.format('DD/MM/YYYY');
+        history.push(`/result?cities=${cities}&passengers=${values.passengers}&date=${date}`);
     };
 
     return (
@@ -40,7 +43,7 @@ const Home = () => {
                         date: dayjs(),
 
                     }}
-                    style={{display: 'flex', flexDirection: 'column'}}
+                    style={{ display: 'flex', flexDirection: 'column' }}
                 >
                     <Row gutter={50}>
                         <Col span={18}>
@@ -62,7 +65,7 @@ const Home = () => {
                         </Col>
                     </Row>
 
-                    <Button type="primary" htmlType="submit" style={{alignSelf: 'center', marginTop: 34}} disabled={!submittable}>
+                    <Button type="primary" htmlType="submit" style={{ alignSelf: 'center', marginTop: 34 }} disabled={!submittable}>
                         Submit
                     </Button>
 
