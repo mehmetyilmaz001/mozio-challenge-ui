@@ -7,3 +7,5 @@ export const ERROR_MESSAGES = {
     CITY_ORIGIN_REQUIRED: 'You must choose the city of origin',
     CITY_DUPLICATE: 'The city of origin and destination cannot be the same'
 }
+
+export const UI_DATE_FORMAT = 'DD/MM/YYYY';

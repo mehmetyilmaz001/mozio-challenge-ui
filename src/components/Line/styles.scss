@@ -13,6 +13,7 @@
         gap: 4px;
         justify-content: center;
         align-items: flex-start;
+        position: relative;
 
         .icon {
             width: 14px;
@@ -23,6 +24,37 @@
             height: 60px;
             margin-left: 6px;
             border-left: dashed 1px $primary-color;
+        }
+
+        .info {
+            position: absolute;
+            right: 100%;
+            top: 50%;
+            width: 96px;
+
+            img {
+               position: absolute;
+            }
+
+            span {
+                position: absolute;
+                font-size: 14px;
+                font-weight: 500;
+                line-height: 20px;
+                color: $secondary-color;
+                left: 8px;
+                top: 3px;
+            }
+        }
+
+        .name {
+            position: absolute;
+            top: 1px;
+            left: 130%;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 16px;
+            color: $primary-text-color;
         }
 
         &:last-child {

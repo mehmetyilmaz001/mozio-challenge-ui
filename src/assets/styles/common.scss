@@ -1,5 +1,9 @@
+@import 'colors.scss';
+
 body {
     margin: 0;
+    font-size: 12px;
+    color: $primary-text-color;
 }
 
 button {
@@ -7,4 +11,24 @@ button {
     outline: none;
     background: none;
     cursor: pointer;
+}
+
+.higlight-text {
+    color: $secondary-color;
+    font-weight: 700;
+    line-height: 16px;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.column {
+        flex-direction: column;
+    }
+}
+
+.mt-35 {
+    margin-top: 35px;
 }

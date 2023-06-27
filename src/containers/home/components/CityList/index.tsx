@@ -69,7 +69,6 @@ const CityList = ({ form }: CityRowProps) => {
                 <div className='city-list'>
                     <Form.List
                         name="cities"
-                        initialValue={['', '']}
                     >
                         {(fields, { add }, { errors }) => (
                             <>

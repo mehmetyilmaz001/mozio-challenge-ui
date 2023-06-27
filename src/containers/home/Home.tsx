@@ -5,12 +5,18 @@ import dayjs from 'dayjs';
 import CityList from './components/CityList';
 import AppCard from '../../components/AppCard';
 import history from '../../history';
+import { UI_DATE_FORMAT } from '../../contants';
 
 const Home = () => {
+    const urlParams = new URLSearchParams(window.location.search);
     const [submittable, setSubmittable] = React.useState(false);
     const [form] = Form.useForm();
     // Watch all values
     const values = Form.useWatch([], form);
+
+    const citiesQuery = urlParams.get('cities'); 
+    const passengersQuery = urlParams.get('passengers'); 
+    const dateQuery = urlParams.get('date'); 
 
     React.useEffect(() => {
         form.validateFields({ validateOnly: true }).then(
@@ -39,8 +45,9 @@ const Home = () => {
                     layout='vertical'
                     form={form}
                     initialValues={{
-                        passengers: 1,
-                        date: dayjs(),
+                        passengers: passengersQuery ?? 1,
+                        date: dateQuery ? dayjs(dateQuery, UI_DATE_FORMAT) : dayjs(),
+                        cities: citiesQuery ? citiesQuery.split(',') : ['', ''],
 
                     }}
                     style={{ display: 'flex', flexDirection: 'column' }}
@@ -53,14 +60,16 @@ const Home = () => {
                             <Form.Item
                                 name="passengers"
                                 label="Passengers"
+                                required
                             >
                                 <InputNumber min={1} max={99} />
                             </Form.Item>
                             <Form.Item
                                 name="date"
                                 label="DatePicker"
+                                required
                             >
-                                <DatePicker disabledDate={current => current && current < dayjs().endOf('day')} format="DD/MM/YYYY" />
+                                <DatePicker disabledDate={current => current && current < dayjs().endOf('day')} format={UI_DATE_FORMAT} />
                             </Form.Item>
                         </Col>
                     </Row>

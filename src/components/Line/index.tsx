@@ -1,6 +1,7 @@
 
 import CircleIcon from '../../assets/images/icon-circle.svg';
 import PinIcon from '../../assets/images/icon-pin.svg';
+import InfoBubble from '../../assets/images/info-bubble.svg';
 
 import './styles.scss'
 
@@ -26,7 +27,7 @@ const Line: React.FC<ILineProps> = ({ items, itemHeight, showLinesOnly }) => {
                     <img className='icon' src={indicatorIcon} alt='indicator-icon' />
                     <div className='line' />
                     {!showLinesOnly && item.name && <div className="name">{item.name}</div> }
-                    {!showLinesOnly && item.info && <div className="info">{item.info}</div> }
+                    {!showLinesOnly && item.info && <div className="info"><img src={InfoBubble} alt='info-bubble' /><span>{item.info}</span></div> }
                 </div>)
         })}
     </div>);
