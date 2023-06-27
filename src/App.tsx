@@ -7,7 +7,7 @@ import locale from 'antd/es/locale/en_US';
 
 function App() {
   return (
-    <ConfigProvider theme={{ token: { colorPrimary: '#00b96b' } }} locale={locale}>
+    <ConfigProvider theme={{ token: { colorPrimary: '#374151' } }} locale={locale}>
        <BrowserRouter basename="/">
           <Routes>
             <Route index element={<Home />} />

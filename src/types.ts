@@ -3,8 +3,3 @@ export type City = {
     latitude: number;
     longitude: number;
 }
-
-export type DDValue = {
-    value: string;
-    label: string;
-}

@@ -1,8 +1,9 @@
+import { LabeledValue } from "antd/es/select";
 import { CITIES_ENDPOINT } from "../../contants";
-import { City, DDValue } from "../../types";
+import { City } from "../../types";
 
 const useFetchCities = () => {
-    async function fetchCityList(city: string): Promise<DDValue[]> {
+    async function fetchCityList(city: string): Promise<LabeledValue[]> {
         if (city.length <= 2) return [];
 
         return fetch(CITIES_ENDPOINT + '?name=' + city)

@@ -4,6 +4,10 @@ import { MinusCircleOutlined } from '@ant-design/icons';
 import PublicLayout from '../../layouts/PublicLayout'
 import CitySearch from '../../components/CitySearch';
 import dayjs from 'dayjs';
+import CircleIcon from '../../assets/images/icon-circle.svg';
+import PinIcon from '../../assets/images/icon-pin.svg';
+import CityRow from './components/CityList';
+import CityList from './components/CityList';
 
 const ERROR_MESSAGES = {
     CITY_REQUIRED: 'Please select a city',
@@ -48,6 +52,9 @@ const Home = () => {
         }
     }
 
+    const cities = Form.useWatch('cities', form);
+    console.log("cities home", cities);
+
 
     return (
         <PublicLayout>
@@ -59,10 +66,14 @@ const Home = () => {
                     style={{ maxWidth: 600 }}
                     layout='vertical'
                     form={form}
+                    initialValues={{
+                        passengers: 1
+                        
+                    }}
                 >
                     <Row gutter={80}>
                         <Col span={12}>
-                            <Form.List
+                            {/* <Form.List
                                 name="cities"
                                 initialValue={['']}
                             >
@@ -84,6 +95,7 @@ const Home = () => {
                                                         },
                                                     ]}
                                                 >
+                                                    {index > 0 && index === fields.length - 1 ? (<img src={PinIcon} alt='icon-pin' />) : (<img src={CircleIcon} alt="icon-circle" />)}
                                                     <CitySearch onInputKeyDown={() => customValidationRule(index)}
                                                     />
                                                 </Form.Item>
@@ -94,6 +106,7 @@ const Home = () => {
                                                     />
                                                 ) : null}
                                             </Form.Item>
+                                            // <CityRow key={field.key} field={field} fieldLen={fields.length} form={form} index={index} remove={remove} cities={form.getFieldValue("cities")}/>
                                         ))}
 
 
@@ -109,14 +122,15 @@ const Home = () => {
                                         </Form.Item>
                                     </>
                                 )}
-                            </Form.List>
+                            </Form.List> */}
+                            <CityList form={form} />
                         </Col>
                         <Col span={12}>
                             <Form.Item
                                 name="passengers"
                                 label="Passengers"
                             >
-                                <InputNumber min={1} max={99} defaultValue={1} />
+                                <InputNumber min={1} max={99} />
                             </Form.Item>
                             <Form.Item
                                 name="date"

@@ -1,7 +1,6 @@
 import { SelectProps } from 'antd';
-import { DDValue } from '../../types';
 import DebounceSelect from '../DebounceSelect';
-import { DefaultOptionType } from 'antd/es/select';
+import { DefaultOptionType, LabeledValue } from 'antd/es/select';
 import useFetchCities from './useFetchCities';
 
 export interface DebounceSelectProps<ValueType = any>
@@ -14,8 +13,8 @@ export interface DebounceSelectProps<ValueType = any>
 
 
 interface ICitySearchProps {
-    value?: DDValue | DDValue[];
-    onChange?: (value: DDValue | DDValue[] | undefined, option: DefaultOptionType | DefaultOptionType[]) => void;
+    value?: LabeledValue | LabeledValue[];
+    onChange?: (value: LabeledValue | LabeledValue[] | undefined, option: DefaultOptionType | DefaultOptionType[]) => void;
     onInputKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
