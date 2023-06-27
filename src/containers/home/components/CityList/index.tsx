@@ -87,7 +87,9 @@ const CityList = ({ form }: CityRowProps) => {
                                         style={{ width: '100%' }}
 
                                     >
-                                        <CitySearch onInputKeyDown={() => customValidationRule(index)} />
+                                        <CitySearch onInputKeyDown={() => customValidationRule(index)} onFail={() => {
+                                            setCustomValidationParams({ index, errMsg: ERROR_MESSAGES.CITY_NOT_FOUND });
+                                        }} />
 
                                     </Form.Item>
                                 ))}

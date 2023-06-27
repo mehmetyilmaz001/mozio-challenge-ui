@@ -3,9 +3,10 @@ export const CITIES_ENDPOINT = API_BASE_URL + 'cities';
 export const GET_DISTANCE_ENDPOINT = API_BASE_URL + 'getDistance';
 
 export const ERROR_MESSAGES = {
-    CITY_REQUIRED: 'Please select a city',
-    CITY_ORIGIN_REQUIRED: 'You must choose the city of origin',
-    CITY_DUPLICATE: 'The city of origin and destination cannot be the same'
+    CITY_REQUIRED: 'Please select a city.',
+    CITY_ORIGIN_REQUIRED: 'You must choose the city of origin.',
+    CITY_DUPLICATE: 'The city of origin and destination cannot be the same.',
+    CITY_NOT_FOUND: 'The city you are looking for does not exist.',
 }
 
 export const UI_DATE_FORMAT = 'DD/MM/YYYY';

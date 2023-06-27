@@ -16,9 +16,10 @@ interface ICitySearchProps {
     value?: LabeledValue | LabeledValue[];
     onChange?: (value: LabeledValue | LabeledValue[] | undefined, option: DefaultOptionType | DefaultOptionType[]) => void;
     onInputKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onFail?: (msg: string) => void;
 }
 
-const CitySearch: React.FC<ICitySearchProps> = ({ value, onChange, onInputKeyDown }) => {
+const CitySearch: React.FC<ICitySearchProps> = ({ value, onChange, onInputKeyDown, onFail }) => {
     const fetchCityList = useFetchCities();
 
     return (
@@ -28,6 +29,7 @@ const CitySearch: React.FC<ICitySearchProps> = ({ value, onChange, onInputKeyDow
                 fetchOptions={fetchCityList}
                 onChange={onChange}
                 onInputKeyDown={onInputKeyDown}
+                onFail={onFail}
                 style={{ width: '100%' }}
                 allowClear
             />

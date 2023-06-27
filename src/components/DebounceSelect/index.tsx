@@ -6,11 +6,12 @@ import debounce from 'lodash/debounce';
 export interface DebounceSelectProps<ValueType = any> extends Omit<SelectProps<ValueType | ValueType[]>, 'options' | 'children'> {
   fetchOptions: (search: string) => Promise<LabeledValue[]>;
   debounceTimeout?: number;
+  onFail?: (msg: string) => void;
 }
 
 function DebounceSelect<
   ValueType extends { key?: string; label: React.ReactNode; value: string | number } = any,
->({ fetchOptions, debounceTimeout = 800, ...props }: DebounceSelectProps<ValueType>) {
+>({ fetchOptions, debounceTimeout = 800, onFail, ...props }: DebounceSelectProps<ValueType>) {
   const [fetching, setFetching] = useState(false);
   const [options, setOptions] = useState<LabeledValue[]>([]);
   const fetchRef = useRef(0);
@@ -30,11 +31,14 @@ function DebounceSelect<
 
         setOptions(newOptions);
         setFetching(false);
+      }).catch((err) => {
+        setFetching(false);
+        onFail?.(err);
       });
     };
 
     return debounce(loadOptions, debounceTimeout);
-  }, [fetchOptions, debounceTimeout]);
+  }, [debounceTimeout, fetchOptions, onFail]);
 
   return (
     <Select

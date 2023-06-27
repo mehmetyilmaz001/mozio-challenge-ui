@@ -7,7 +7,10 @@ const useFetchCities = () => {
         if (city.length <= 2) return [];
 
         return fetch(CITIES_ENDPOINT + '?name=' + city)
-            .then((response) => response.json())
+            .then((response) => { 
+                if(!response.ok) throw new Error("Error");
+                return response.json();
+            })
             .then((body) => {
 
                 if (!body?.cities) {
@@ -19,7 +22,10 @@ const useFetchCities = () => {
                     value: city.name,
                 }));
             }
-            );
+            ).catch((error) => {
+                console.error("ee => ", error);
+                throw new Error("Error");
+            });
     }
 
     return fetchCityList;
