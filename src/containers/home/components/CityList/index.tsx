@@ -4,6 +4,7 @@ import CitySearch from '../CitySearch';
 import { ERROR_MESSAGES } from '../../../../contants';
 import Line from '../../../../components/Line';
 import PlusIcon from '../../../../assets/images/icon-plus.svg';
+import RemoveIcon from '../../../../assets/images/icon-remove.svg';
 
 import './styles.scss';
 
@@ -72,33 +73,36 @@ const CityList = ({ form }: CityRowProps) => {
                     <Form.List
                         name="cities"
                     >
-                        {(fields, { add }, { errors }) => (
+                        {(fields, { add, remove }, { errors }) => (
                             <>
                                 {fields.map((field, index) => (
-                                    <Form.Item
-                                        label={index === 0 ? 'City of origin' : 'City of destination'}
-                                        required={false}
-                                        {...field}
-                                        {...(customValidationParams.index === index ? cityInputErrorProps : {})}
-                                        validateTrigger={['onChange', 'onBlur']}
-                                        rules={[
-                                            {
-                                                validator: async (_, city) => validationRule(_, city, index)
-                                            },
-                                        ]}
-                                        style={{ width: '100%' }}
+                                    <div className='form-item-wrapper' key={field.name}>
+                                        <Form.Item
+                                            label={index === 0 ? 'City of origin' : 'City of destination'}
+                                            required={false}
+                                            {...field}
+                                            {...(customValidationParams.index === index ? cityInputErrorProps : {})}
+                                            validateTrigger={['onChange', 'onBlur']}
+                                            rules={[
+                                                {
+                                                    validator: async (_, city) => validationRule(_, city, index)
+                                                },
+                                            ]}
+                                            style={{ width: '100%' }}
 
-                                    >
-                                        <CitySearch onInputKeyDown={() => customValidationRule(index)} onFail={() => {
-                                            setCustomValidationParams({ index, errMsg: ERROR_MESSAGES.CITY_NOT_FOUND });
-                                        }} />
+                                        >
+                                            <CitySearch onInputKeyDown={() => customValidationRule(index)} onFail={() => {
+                                                setCustomValidationParams({ index, errMsg: ERROR_MESSAGES.CITY_NOT_FOUND });
+                                            }} />
 
-                                    </Form.Item>
+                                        </Form.Item>
+                                        {index > 0 ? <button onClick={() => remove(field.name)}><img src={RemoveIcon} alt='remove-icon' /></button> : <div style={{width: 26}} />}
+                                    </div>
                                 ))}
 
-                                <div style={{display: 'flex', position: 'relative'}}>
-                                    <img src={PlusIcon} alt='plus-icon' style={{position: 'absolute', left: -53, top: 8}} />
-                                    <Form.Item style={{marginBottom: 0}}>
+                                <div style={{ display: 'flex', position: 'relative' }}>
+                                    <img src={PlusIcon} alt='plus-icon' style={{ position: 'absolute', left: -53, top: 8 }} />
+                                    <Form.Item style={{ marginBottom: 0 }}>
                                         <Button
                                             type="text"
                                             onClick={() => add()}
