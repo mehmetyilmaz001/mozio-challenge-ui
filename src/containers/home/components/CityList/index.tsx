@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Form, FormInstance, FormItemProps } from 'antd';
-import CitySearch from '../../../../components/CitySearch';
+import CitySearch from '../CitySearch';
 import { ERROR_MESSAGES } from '../../../../contants';
-import CircleIcon from '../../../../assets/images/icon-circle.svg';
-import PinIcon from '../../../../assets/images/icon-pin.svg';
-import RemoveIcon from '../../../../assets/images/icon-remove.svg';
-import { MinusCircleOutlined } from '@ant-design/icons';
+
 
 interface CityRowProps {
     form: FormInstance<any>;
@@ -15,8 +12,6 @@ const initialStateValues = { index: -1, errMsg: '' };
 
 
 const CityList = ({ form }: CityRowProps) => {
-
-
     const [customValidationParams, setCustomValidationParams] = useState(initialStateValues);
     const cities = Form.useWatch('cities', form);
 
@@ -39,37 +34,26 @@ const CityList = ({ form }: CityRowProps) => {
     }
 
     const customValidationRule = (index: number) => {
+        const originCity = form.getFieldValue("cities")[0];
         if (index > 0) {
-            const originCity = form.getFieldValue("cities")[0];
             if (!originCity) {
                 setCustomValidationParams({ index: index > 1 ? index : 0, errMsg: ERROR_MESSAGES.CITY_ORIGIN_REQUIRED });
             }
         }
     }
 
-
-    // useEffect(() => {
-    //     if (customValidationParams.errMsg === ERROR_MESSAGES.CITY_ORIGIN_REQUIRED) {
-    //        console.log("originCity", cities);
-    //         if (cities[0]) {
-    //             setCustomValidationParams(initialStateValues);
-    //         }
-
-    //     }
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [cities]);
-
-
-    // useEffect(() => {
-    //     console.log("cityListSemih", form.getFieldValue("cities"));
-    // }, [form.getFieldValue("cities")]);
-
-    console.log("Cities", cities);
+    useEffect(() => {
+        if (cities && cities.length > 1) {
+            if (cities[0]) {
+                setCustomValidationParams(initialStateValues);
+            }
+        }
+    }, [cities]);
 
     return (
         <Form.List
             name="cities"
-            initialValue={['']}
+            initialValue={['', '']}
         >
             {(fields, { add, remove }, { errors }) => (
                 <>
@@ -85,19 +69,16 @@ const CityList = ({ form }: CityRowProps) => {
                                     validator: async (_, city) => validationRule(_, city, index)
                                 },
                             ]}
-                            
+
                         >
 
-                            {/* {index > 0 && index === fields.length - 1 ? (<img src={PinIcon} alt='icon-pin' />) : (<img src={CircleIcon} alt="icon-circle" />)} */}
                             <CitySearch onInputKeyDown={() => customValidationRule(index)}
-                              
+                                name={field.name}
+                                index={index}
+                                remove={remove}
+                                fieldsLen={fields.length}
                             />
-                            {/* {fields.length > 1 && index > 0 ? (
-                                <MinusCircleOutlined
-                                    className="dynamic-delete-button"
-                                    onClick={() => remove(field.name)}
-                                />
-                            ) : null} */}
+
                         </Form.Item>
                     ))}
 

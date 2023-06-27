@@ -1,6 +1,6 @@
 import { LabeledValue } from "antd/es/select";
-import { CITIES_ENDPOINT } from "../../contants";
-import { City } from "../../types";
+import { CITIES_ENDPOINT } from "../../../../contants";
+import { City } from "../../../../types";
 
 const useFetchCities = () => {
     async function fetchCityList(city: string): Promise<LabeledValue[]> {
