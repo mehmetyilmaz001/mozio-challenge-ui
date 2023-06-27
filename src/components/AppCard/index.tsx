@@ -1,12 +1,14 @@
 import { Card } from "antd"
 
+import './styles.scss';
+
 interface IProps {
     children: React.ReactNode;
 }
 
 const AppCard = ({ children }: IProps) => {
     return (
-        <Card className='home-card' style={{ minWidth: 726, padding: 40 }}>
+        <Card className='app-card' style={{ padding: 40 }}>
             {children}
         </Card>
     )

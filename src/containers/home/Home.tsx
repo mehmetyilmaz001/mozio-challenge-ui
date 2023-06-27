@@ -14,9 +14,9 @@ const Home = () => {
     // Watch all values
     const values = Form.useWatch([], form);
 
-    const citiesQuery = urlParams.get('cities'); 
-    const passengersQuery = urlParams.get('passengers'); 
-    const dateQuery = urlParams.get('date'); 
+    const citiesQuery = urlParams.get('cities');
+    const passengersQuery = urlParams.get('passengers');
+    const dateQuery = urlParams.get('date');
 
     React.useEffect(() => {
         form.validateFields({ validateOnly: true }).then(
@@ -52,31 +52,45 @@ const Home = () => {
                     }}
                     style={{ display: 'flex', flexDirection: 'column' }}
                 >
-                    <Row gutter={50}>
-                        <Col span={18}>
+                    <Row gutter={40} >
+                        <Col xl={18} xs={24} md={24}>
                             <CityList form={form} />
                         </Col>
-                        <Col span={6}>
-                            <Form.Item
-                                name="passengers"
-                                label="Passengers"
-                                required
-                            >
-                                <InputNumber min={1} max={99} />
-                            </Form.Item>
-                            <Form.Item
-                                name="date"
-                                label="DatePicker"
-                                required
-                            >
-                                <DatePicker disabledDate={current => current && current < dayjs().endOf('day')} format={UI_DATE_FORMAT} />
-                            </Form.Item>
+                        <Col xl={6} xs={24} md={24}>
+                            <Row>
+                                <Col lg={24} xs={12}>
+                                    <Form.Item
+                                        name="passengers"
+                                        label="Passengers"
+                                        required
+                                    >
+                                        <InputNumber min={1} max={99} />
+                                    </Form.Item>
+                                </Col>
+                                <Col lg={24} xs={12}>
+                                    <Form.Item
+                                        name="date"
+                                        label="DatePicker"
+                                        required
+                                    >
+                                        <DatePicker disabledDate={current => current && current < dayjs().endOf('day')} format={UI_DATE_FORMAT} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
                         </Col>
                     </Row>
 
-                    <Button type="primary" htmlType="submit" style={{ alignSelf: 'center', marginTop: 34 }} disabled={!submittable}>
-                        Submit
-                    </Button>
+                    <Row justify={{
+                        xs: 'center',
+                        sm: 'center',
+                        lg: 'center'
+                    }}>
+                        <Col lg={6} xs={24}>
+                            <Button type="primary" htmlType="submit" style={{ alignSelf: 'center', marginTop: 34, width: '100%' }} disabled={!submittable}>
+                                Submit
+                            </Button>
+                        </Col>
+                    </Row>
 
                 </Form>
 
