@@ -12,7 +12,6 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "strictNullChecks": true,
-    "suppressImplicitAnyIndexErrors": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "noUnusedLocals": false,
@@ -25,7 +24,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react",
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
   },
   "include": [
     "./src/"
