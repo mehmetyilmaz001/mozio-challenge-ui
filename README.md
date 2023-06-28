@@ -12,7 +12,7 @@ This project was created for demonstrating frontend development skills.
 
 
 ## Previews
-![preview](.github/desktop.gif)
+![preview]([.github/desktop.gif](https://raw.githubusercontent.com/mehmetyilmaz001/mozio-challenge-ui/main/public/desktop.gif))
 
 
 
